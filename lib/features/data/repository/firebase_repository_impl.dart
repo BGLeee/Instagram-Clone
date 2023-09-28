@@ -57,7 +57,7 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
 
   @override
   Future<String> uploadProfileImageToStorage(
-      File imageFile, bool isPost, String childName) {
+      File? imageFile, bool isPost, String childName) {
     return remoteDataSource.uploadProfileImageToStorage(
         imageFile, isPost, childName);
   }

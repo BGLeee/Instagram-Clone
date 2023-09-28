@@ -106,15 +106,15 @@ class ProfilePage extends StatelessWidget {
                 ],
               ),
               sizeVer(10),
-              const Text(
-                "Name",
-                style:
-                    TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+              Text(
+                "${currentUser.name}",
+                style: const TextStyle(
+                    color: primaryColor, fontWeight: FontWeight.bold),
               ),
               sizeVer(10),
-              const Text(
-                "The bio of user",
-                style: TextStyle(color: primaryColor),
+              Text(
+                "${currentUser.bio}",
+                style: const TextStyle(color: primaryColor),
               ),
               sizeVer(10),
               GridView.builder(
@@ -176,7 +176,8 @@ class ProfilePage extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10.0),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, PageConst.editProfilePage);
+                        Navigator.pushNamed(context, PageConst.editProfilePage,
+                            arguments: currentUser);
                       },
                       child: const Text(
                         "Edit Profile",

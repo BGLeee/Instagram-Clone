@@ -21,5 +21,5 @@ abstract class FirebaseRemoteDataSource {
   //Storage
 
   Future<String> uploadProfileImageToStorage(
-      File imageFile, bool isPost, String childName);
+      File? imageFile, bool isPost, String childName);
 }

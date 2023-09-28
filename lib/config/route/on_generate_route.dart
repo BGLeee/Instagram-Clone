@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
 import '../../const.dart';
 import '../../features/presentation/pages/Post/comment_page.dart';
 import '../../features/presentation/pages/Post/update_post_page.dart';
@@ -14,7 +15,13 @@ class OnGenerateRoute {
     switch (settings.name) {
       case PageConst.editProfilePage:
         {
-          return routeBuilder(EditProfilePage());
+          if (args is UserEntity) {
+            return routeBuilder(EditProfilePage(
+              currentUser: args,
+            ));
+          } else {
+            return routeBuilder(const NoPageFound());
+          }
         }
       case PageConst.updatePostPage:
         {
