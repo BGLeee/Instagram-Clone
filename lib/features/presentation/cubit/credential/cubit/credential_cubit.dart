@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../domain/entities/user/user_entity.dart';
-import '../../../../domain/usecases/sign_in_usecase.dart';
-import '../../../../domain/usecases/sign_up_usecase.dart';
+import '../../../../domain/usecases/user/sign_in_usecase.dart';
+import '../../../../domain/usecases/user/sign_up_usecase.dart';
 
 part 'credential_state.dart';
 
@@ -34,7 +34,7 @@ class CredentialCubit extends Cubit<CredentialState> {
   Future<void> signUpUser({required UserEntity user}) async {
     emit(CredentialLoading());
     try {
-      await signInUserUseCase.call(user);
+      await signUpUseCase.call(user);
       emit(CredentialSuccess());
     } on SocketException catch (_) {
       emit(CredentialFailure());

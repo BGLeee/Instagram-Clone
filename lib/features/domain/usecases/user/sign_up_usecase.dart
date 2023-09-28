@@ -1,5 +1,6 @@
-import '../entities/user/user_entity.dart';
-import '../repository/firebase_repository.dart';
+import 'package:instagram_clone/features/domain/repository/firebase_repository.dart';
+
+import '../../entities/user/user_entity.dart';
 
 class SignUpUseCase {
   final FirebaseRepository repository;

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../entities/user/user_entity.dart';
 
 abstract class FirebaseRepository {
@@ -22,4 +24,9 @@ abstract class FirebaseRepository {
   Future<void> createUser(UserEntity user);
 
   Future<void> updateUser(UserEntity user);
+
+  //Storage
+
+  Future<String> uploadProfileImageToStorage(
+      File imageFile, bool isPost, String childName);
 }

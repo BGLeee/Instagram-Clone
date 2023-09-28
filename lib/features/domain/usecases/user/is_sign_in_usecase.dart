@@ -1,4 +1,4 @@
-import '../repository/firebase_repository.dart';
+import '../../repository/firebase_repository.dart';
 
 class IsSignInUseCase {
   final FirebaseRepository repository;

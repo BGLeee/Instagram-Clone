@@ -14,7 +14,7 @@ class OnGenerateRoute {
     switch (settings.name) {
       case PageConst.editProfilePage:
         {
-          return routeBuilder(const EditProfilePage());
+          return routeBuilder(EditProfilePage());
         }
       case PageConst.updatePostPage:
         {

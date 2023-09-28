@@ -1,13 +1,13 @@
 import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
 
-import '../repository/firebase_repository.dart';
+import '../../repository/firebase_repository.dart';
 
-class UpdateUserUseCase {
+class CreateUserUseCase {
   final FirebaseRepository repository;
 
-  UpdateUserUseCase({required this.repository});
+  CreateUserUseCase({required this.repository});
 
   Future<void> call(UserEntity user) {
-    return repository.updateUser(user);
+    return repository.createUser(user);
   }
 }

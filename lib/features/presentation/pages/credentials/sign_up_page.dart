@@ -1,7 +1,11 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:instagram_clone/features/presentation/widgets/profile_widget.dart';
 import '../../../../const.dart';
 import '../../../domain/entities/user/user_entity.dart';
 import '../../cubit/auth/cubit/auth_cubit.dart';
@@ -64,6 +68,26 @@ class _SignUpPageState extends State<SignUpPage> {
         ));
   }
 
+  File? _imageFile;
+  Future selectImage() async {
+    try {
+      final pickedFile = await ImagePicker.platform
+          .getImageFromSource(source: ImageSource.gallery);
+
+      setState(() {
+        if (pickedFile != null) {
+          _imageFile = File(pickedFile.path);
+        } else {
+          toast("no image has been selected");
+          log("no image has been selected");
+        }
+      });
+    } catch (e) {
+      toast("some shit happened while trying to pick image");
+      log("$e");
+    }
+  }
+
   void _signUpUser() {
     setState(() {
       _isSigningUp = true;
@@ -72,19 +96,19 @@ class _SignUpPageState extends State<SignUpPage> {
     BlocProvider.of<CredentialCubit>(context)
         .signUpUser(
             user: UserEntity(
-          email: _emailController.text,
-          password: _passwordController.text,
-          bio: _bioController.text,
-          username: _usernameController.text,
-          totalPosts: 0,
-          totalFollowing: 0,
-          followers: [],
-          totalFollowers: 0,
-          profileUrl: "",
-          website: "",
-          following: [],
-          name: "",
-        ))
+                email: _emailController.text,
+                password: _passwordController.text,
+                bio: _bioController.text,
+                username: _usernameController.text,
+                totalPosts: 0,
+                totalFollowing: 0,
+                followers: [],
+                totalFollowers: 0,
+                profileUrl: "",
+                website: "",
+                following: [],
+                name: "",
+                imageFile: _imageFile))
         .then((value) => _clear());
   }
 
@@ -122,13 +146,17 @@ class _SignUpPageState extends State<SignUpPage> {
                   height: 60,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(30)),
-                  child: Image.asset("assets/profile_default.png"),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: profileWidget(image: _imageFile)),
                 ),
                 Positioned(
                   right: -10,
                   bottom: -15,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      selectImage();
+                    },
                     icon: const Icon(
                       Icons.add_a_photo,
                       color: blueColor,

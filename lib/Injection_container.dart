@@ -1,20 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:instagram_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 
 import 'features/data/data_sources/remote_data_sources/remote_data_source.dart';
 import 'features/data/data_sources/remote_data_sources/remote_data_source_impl.dart';
 import 'features/data/repository/firebase_repository_impl.dart';
 import 'features/domain/repository/firebase_repository.dart';
-import 'features/domain/usecases/create_user_usecase.dart';
-import 'features/domain/usecases/get_current_uid_usecase.dart';
-import 'features/domain/usecases/get_user_usercases.dart';
-import 'features/domain/usecases/get_users_usecases.dart';
-import 'features/domain/usecases/is_sign_in_usecase.dart';
-import 'features/domain/usecases/sign_in_usecase.dart';
-import 'features/domain/usecases/sign_out_usecase.dart';
-import 'features/domain/usecases/sign_up_usecase.dart';
-import 'features/domain/usecases/update_user_usecase.dart';
+import 'features/domain/usecases/storage/upload_profile_image_toStograge_usecase.dart';
+import 'features/domain/usecases/user/create_user_usecase.dart';
+import 'features/domain/usecases/user/get_current_uid_usecase.dart';
+import 'features/domain/usecases/user/get_user_usercases.dart';
+import 'features/domain/usecases/user/get_users_usecases.dart';
+import 'features/domain/usecases/user/is_sign_in_usecase.dart';
+import 'features/domain/usecases/user/sign_in_usecase.dart';
+import 'features/domain/usecases/user/sign_out_usecase.dart';
+import 'features/domain/usecases/user/sign_up_usecase.dart';
+import 'features/domain/usecases/user/update_user_usecase.dart';
 import 'features/presentation/cubit/auth/cubit/auth_cubit.dart';
 import 'features/presentation/cubit/credential/cubit/credential_cubit.dart';
 import 'features/presentation/cubit/user/cubit/user_cubit.dart';
@@ -40,6 +43,8 @@ Future<void> init() async {
   sl.registerFactory(
     () => UserCubit(updateUserUseCase: sl.call(), getUsersUseCase: sl.call()),
   );
+
+  sl.registerFactory(() => GetSingleUserCubit(getSingleUserUseCase: sl.call()));
   // Use Cases
   sl.registerLazySingleton(() => SignOutUseCase(repository: sl.call()));
 
@@ -59,6 +64,10 @@ Future<void> init() async {
 
   sl.registerLazySingleton(() => GetUserUseCase(repository: sl.call()));
 
+  //Storage
+  sl.registerLazySingleton(
+      () => UploadImageToStorageUseCase(repository: sl.call()));
+
   // Repository
 
   sl.registerLazySingleton<FirebaseRepository>(
@@ -68,13 +77,17 @@ Future<void> init() async {
 
   sl.registerLazySingleton<FirebaseRemoteDataSource>(() =>
       FirebaseRemoteDataSourceImpl(
-          firebaseFirestore: sl.call(), firebaseAuth: sl.call()));
+          firebaseFirestore: sl.call(),
+          firebaseAuth: sl.call(),
+          firebaseStorage: sl.call()));
 
   // Externals
 
   final firebaseFirestore = FirebaseFirestore.instance;
   final firebaseAuth = FirebaseAuth.instance;
+  final firebaseStorage = FirebaseStorage.instance;
 
   sl.registerLazySingleton(() => firebaseFirestore);
   sl.registerLazySingleton(() => firebaseAuth);
+  sl.registerLazySingleton(() => firebaseStorage);
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../../../domain/entities/user/user_entity.dart';
 
 abstract class FirebaseRemoteDataSource {
@@ -15,4 +17,9 @@ abstract class FirebaseRemoteDataSource {
   Future<String> getCurrentUid();
   Future<void> createUser(UserEntity user);
   Future<void> updateUser(UserEntity user);
+
+  //Storage
+
+  Future<String> uploadProfileImageToStorage(
+      File imageFile, bool isPost, String childName);
 }

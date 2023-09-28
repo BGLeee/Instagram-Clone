@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../domain/entities/user/user_entity.dart';
-import '../../../../domain/usecases/get_users_usecases.dart';
-import '../../../../domain/usecases/update_user_usecase.dart';
+import '../../../../domain/usecases/user/get_users_usecases.dart';
+import '../../../../domain/usecases/user/update_user_usecase.dart';
 
 part 'user_state.dart';
 
