@@ -67,6 +67,7 @@ class UserModel extends UserEntity {
         "uid": uid,
         "email": email,
         "name": name,
+        "bio": bio,
         "username": username,
         "totalFollowers": totalFollowers,
         "totalFollowing": totalFollowing,

@@ -9,7 +9,7 @@ class UploadImageToStorageUseCase {
 
   UploadImageToStorageUseCase({required this.repository});
 
-  Future<void> call(File imageFile, bool isPost, String childName) {
+  Future<String> call(File? imageFile, bool isPost, String childName) {
     return repository.uploadProfileImageToStorage(imageFile, isPost, childName);
   }
 }
