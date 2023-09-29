@@ -62,6 +62,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   @override
+  void dispose() {
+    _nameController!.dispose();
+    _userNameController!.dispose();
+    _websiteController!.dispose();
+    _bioController!.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backGroundColor,

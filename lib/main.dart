@@ -6,9 +6,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:instagram_clone/Injection_container.dart' as ic;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'features/domain/entities/posts/post_entity.dart';
 import 'features/presentation/cubit/credential/cubit/credential_cubit.dart';
+import 'features/presentation/cubit/post/cubit/post_cubit.dart';
 import 'features/presentation/cubit/user/cubit/user_cubit.dart';
 import 'features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
+import 'features/presentation/pages/home/home_page.dart';
 import 'features/presentation/pages/main_screen.dart';
 
 Future main() async {
@@ -50,7 +53,7 @@ class MyApp extends StatelessWidget {
                 }
               },
             );
-          }
+          },
         },
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

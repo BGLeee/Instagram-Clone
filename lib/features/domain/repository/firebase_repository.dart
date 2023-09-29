@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import '../entities/posts/post_entity.dart';
 import '../entities/user/user_entity.dart';
 
 abstract class FirebaseRepository {
@@ -29,4 +30,12 @@ abstract class FirebaseRepository {
 
   Future<String> uploadProfileImageToStorage(
       File? imageFile, bool isPost, String childName);
+
+  //post Features
+    Future<void> createPost(PostEntity post);
+    Stream<List<PostEntity>> readPost(PostEntity post);
+    Future<void> updatePost(PostEntity post);
+    Future<void> deletePost(PostEntity post);
+    Future<void> likePost(PostEntity post);
+
 }

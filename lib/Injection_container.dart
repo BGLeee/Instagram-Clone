@@ -2,12 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:instagram_clone/features/domain/usecases/post/create_post_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/post/delete_post_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/post/like_post_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/post/read_post_usecase.dart';
+import 'package:instagram_clone/features/presentation/cubit/post/cubit/post_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 
 import 'features/data/data_sources/remote_data_sources/remote_data_source.dart';
 import 'features/data/data_sources/remote_data_sources/remote_data_source_impl.dart';
 import 'features/data/repository/firebase_repository_impl.dart';
 import 'features/domain/repository/firebase_repository.dart';
+import 'features/domain/usecases/post/update_post_usecase.dart';
 import 'features/domain/usecases/storage/upload_profile_image_toStograge_usecase.dart';
 import 'features/domain/usecases/user/create_user_usecase.dart';
 import 'features/domain/usecases/user/get_current_uid_usecase.dart';
@@ -68,6 +74,13 @@ Future<void> init() async {
   sl.registerLazySingleton(
       () => UploadImageToStorageUseCase(repository: sl.call()));
 
+  //post
+  sl.registerLazySingleton(() => CreatePostUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => UpdatePostUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => DeletePostUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => ReadPostUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => LikePostUseCase(repository: sl.call()));
+
   // Repository
 
   sl.registerLazySingleton<FirebaseRepository>(
@@ -80,6 +93,14 @@ Future<void> init() async {
           firebaseFirestore: sl.call(),
           firebaseAuth: sl.call(),
           firebaseStorage: sl.call()));
+
+  // Post Cubit Injection
+  sl.registerLazySingleton<PostCubit>(() => PostCubit(
+      createPostUseCase: sl.call(),
+      deletePostUseCase: sl.call(),
+      likePostUseCase: sl.call(),
+      readPostUseCase: sl.call(),
+      updatePostUseCase: sl.call()));
 
   // Externals
 

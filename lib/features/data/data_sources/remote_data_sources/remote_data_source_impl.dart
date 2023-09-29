@@ -1,8 +1,11 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:instagram_clone/features/data/data_sources/remote_data_sources/remote_data_source.dart';
+import 'package:instagram_clone/features/data/model/post/post_model.dart';
 import 'package:instagram_clone/features/data/model/user_model.dart';
+import 'package:instagram_clone/features/domain/entities/posts/post_entity.dart';
 import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -210,5 +213,89 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
         (await uploadTask.whenComplete(() {})).ref.getDownloadURL();
 
     return await imageUrl;
+  }
+
+  @override
+  Future<void> createPost(PostEntity post) async {
+    final postCollection = firebaseFirestore.collection(FirebaseConst.posts);
+
+    final newPost = PostModel(
+      userProfileUrl: post.userProfileUrl,
+      username: post.username,
+      totalLikes: 0,
+      totalcomments: 0,
+      postImageUrl: post.postImageUrl,
+      postId: post.postId,
+      likes: [],
+      description: post.description,
+      creatorUid: post.creatorUid,
+      createAt: post.createAt,
+    ).toJson();
+    try {
+      final postRef = await postCollection.doc(post.postId).get();
+      if (!postRef.exists) {
+        postCollection.doc(post.postId).set(newPost);
+      } else {
+        postCollection.doc(post.postId).update(newPost);
+      }
+    } catch (e) {
+      toast("some shit happened when creating new post");
+    }
+  }
+
+  @override
+  Future<void> deletePost(PostEntity post) async {
+    final postCollection = firebaseFirestore.collection(FirebaseConst.posts);
+    try {
+      await postCollection.doc(post.postId).delete();
+    } catch (e) {
+      toast("some shit happened when deleting new post");
+    }
+  }
+
+  @override
+  Future<void> likePost(PostEntity post) async {
+    final postCollection = firebaseFirestore.collection(FirebaseConst.posts);
+    final postRef = await postCollection.doc(post.postId).get();
+    final currentUserId = await getCurrentUid();
+    final totalLikes = postRef.get("totalLikes");
+    if (postRef.exists) {
+      List likes = postRef.get("likes");
+      if (likes.contains(currentUserId)) {
+        postCollection.doc(post.postId).update({
+          "likes": FieldValue.arrayRemove([currentUserId]),
+          "totalLikes": totalLikes - 1,
+        });
+      } else {
+        log('YOUR ID IS LIVE');
+        postCollection.doc(post.postId).update({
+          "likes": FieldValue.arrayUnion([currentUserId]),
+          "totalLikes": totalLikes + 1
+        });
+      }
+    }
+  }
+
+  @override
+  Stream<List<PostEntity>> readPost(PostEntity post) {
+    final postCollection = firebaseFirestore
+        .collection(FirebaseConst.posts)
+        .orderBy("createAt", descending: true);
+    return postCollection.snapshots().map((querySnapshot) =>
+        querySnapshot.docs.map((e) => PostModel.fromSnapshot(e)).toList());
+  }
+
+  @override
+  Future<void> updatePost(PostEntity post) async {
+    final postCollection = firebaseFirestore.collection(FirebaseConst.posts);
+    Map<String, dynamic> postInfo = Map();
+    if (post.description != "" && post.description != null) {
+      postInfo["description"] = post.description;
+    }
+    if (post.postImageUrl != "" && post.postImageUrl != null) {
+      postInfo["postImageUrl"] = post.postImageUrl;
+    }
+
+    postCollection.doc(post.postId).update(postInfo);
   }
 }

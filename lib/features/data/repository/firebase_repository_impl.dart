@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:instagram_clone/features/domain/entities/posts/post_entity.dart';
 import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
 import 'package:instagram_clone/features/domain/repository/firebase_repository.dart';
 
@@ -46,7 +47,6 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
 
   @override
   Future<void> signUpUser(UserEntity user) async {
-    print("Yea this is running");
     return remoteDataSource.signUpUser(user);
   }
 
@@ -60,5 +60,30 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
       File? imageFile, bool isPost, String childName) {
     return remoteDataSource.uploadProfileImageToStorage(
         imageFile, isPost, childName);
+  }
+
+  @override
+  Future<void> createPost(PostEntity post) {
+    return remoteDataSource.createPost(post);
+  }
+
+  @override
+  Future<void> deletePost(PostEntity post) {
+    return remoteDataSource.deletePost(post);
+  }
+
+  @override
+  Future<void> likePost(PostEntity post) {
+    return remoteDataSource.likePost(post);
+  }
+
+  @override
+  Stream<List<PostEntity>> readPost(PostEntity post) {
+    return remoteDataSource.readPost(post);
+  }
+
+  @override
+  Future<void> updatePost(PostEntity post) {
+    return remoteDataSource.updatePost(post);
   }
 }

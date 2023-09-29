@@ -1,10 +1,24 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:instagram_clone/features/domain/entities/posts/post_entity.dart';
+import 'package:instagram_clone/features/presentation/cubit/post/cubit/post_cubit.dart';
+import 'package:instagram_clone/features/presentation/pages/home/widget/post_card_widget.dart';
 import '../../../../const.dart';
+import "package:flutter_feather_icons/flutter_feather_icons.dart";
+import 'package:instagram_clone/Injection_container.dart' as ic;
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,182 +40,53 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 30,
-                      height: 30,
-                      decoration: const BoxDecoration(
-                          color: secondaryColor, shape: BoxShape.circle),
-                    ),
-                    sizeHor(10),
-                    const Text(
-                      "Username",
-                      style: TextStyle(
-                          color: primaryColor, fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-                InkWell(
-                  onTap: () {
-                    _openBottomModalSheet(context);
-                  },
-                  child: const Icon(
-                    Icons.more_vert,
-                    color: primaryColor,
-                  ),
-                )
-              ],
-            ),
-            sizeVer(10),
-            Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.30,
-              color: secondaryColor,
-            ),
-            sizeVer(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.favorite,
-                      color: primaryColor,
-                    ),
-                    sizeHor(10),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, PageConst.commentPage);
-                      },
-                      child: const Icon(
-                        FontAwesomeIcons.message,
-                        color: primaryColor,
-                      ),
-                    ),
-                    sizeHor(10),
-                    const Icon(
-                      Icons.send,
-                      color: primaryColor,
-                    ),
-                  ],
-                ),
-                const Icon(
-                  Icons.bookmark_border,
-                  color: primaryColor,
-                )
-              ],
-            ),
-            sizeVer(10),
-            Row(
-              children: [
-                const Text(
-                  "Username",
-                  style: TextStyle(
-                      color: primaryColor, fontWeight: FontWeight.bold),
-                ),
-                sizeHor(10),
-                const Text(
-                  "some description",
-                  style: TextStyle(color: primaryColor),
-                ),
-              ],
-            ),
-            sizeVer(10),
-            const Text(
-              "View all 10 comments",
-              style: TextStyle(color: darkGreyColor),
-            ),
-            sizeVer(10),
-            const Text(
-              "08/5/2022",
-              style: TextStyle(color: darkGreyColor),
-            ),
-          ],
+      body: BlocProvider.value(
+        value: ic.sl<PostCubit>()..getPosts(post: const PostEntity()),
+        child: BlocBuilder<PostCubit, PostState>(
+          builder: (context, postState) {
+            if (postState is PostLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (postState is PostLoaded) {
+              log("you are success ${postState.posts.length}");
+              return postState.posts.isEmpty
+                  ? _noPostsWidget()
+                  : ListView.builder(
+                      itemCount: postState.posts.length,
+                      itemBuilder: (context, index) {
+                        final post = postState.posts[index];
+                        return BlocProvider.value(
+                          value: ic.sl<PostCubit>(),
+                          child: PostCardWidget(post: post),
+                        );
+                      });
+            }
+
+            if (postState is PostFailure) {
+              toast("Some thing happen while trying to display posts");
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ),
       ),
     );
   }
 
-  _openBottomModalSheet(BuildContext context) {
-    return showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            height: 150,
-            decoration: BoxDecoration(color: backGroundColor.withOpacity(.8)),
-            child: SingleChildScrollView(
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 10.0),
-                      child: Text(
-                        "More Options",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: primaryColor),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    const Divider(
-                      thickness: 1,
-                      color: secondaryColor,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 10.0),
-                      child: Text(
-                        "Delete Post",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: primaryColor),
-                      ),
-                    ),
-                    sizeVer(7),
-                    const Divider(
-                      thickness: 1,
-                      color: secondaryColor,
-                    ),
-                    sizeVer(7),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, PageConst.updatePostPage);
-                        },
-                        child: const Text(
-                          "Update Post",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: primaryColor),
-                        ),
-                      ),
-                    ),
-                    sizeVer(7),
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
+  _noPostsWidget() {
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Icons.emoji_emotions_outlined),
+        Center(
+          child: Text(
+            "No Post Yet Sorry",
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
+      ],
+    );
   }
 }
