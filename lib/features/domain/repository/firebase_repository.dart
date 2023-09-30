@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import '../entities/comment/comment_entity.dart';
 import '../entities/posts/post_entity.dart';
 import '../entities/user/user_entity.dart';
 
@@ -32,10 +33,17 @@ abstract class FirebaseRepository {
       File? imageFile, bool isPost, String childName);
 
   //post Features
-    Future<void> createPost(PostEntity post);
-    Stream<List<PostEntity>> readPost(PostEntity post);
-    Future<void> updatePost(PostEntity post);
-    Future<void> deletePost(PostEntity post);
-    Future<void> likePost(PostEntity post);
+  Future<void> createPost(PostEntity post);
+  Stream<List<PostEntity>> readPost(PostEntity post);
+  Stream<List<PostEntity>> readSinglePost(String postId);
+  Future<void> updatePost(PostEntity post);
+  Future<void> deletePost(PostEntity post);
+  Future<void> likePost(PostEntity post);
 
+  //comment Features
+  Future<void> createComment(CommentEntity comment);
+  Stream<List<CommentEntity>> readComment(String postId);
+  Future<void> updateComment(CommentEntity comment);
+  Future<void> deleteComment(CommentEntity comment);
+  Future<void> likeComment(CommentEntity comment);
 }

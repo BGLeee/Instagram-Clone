@@ -2,11 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:instagram_clone/features/domain/usecases/comment/create_comment_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/comment/delete_comment_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/comment/like_comment_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/comment/read_comment_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/comment/update_comment_usecase.dart';
 import 'package:instagram_clone/features/domain/usecases/post/create_post_usecase.dart';
 import 'package:instagram_clone/features/domain/usecases/post/delete_post_usecase.dart';
 import 'package:instagram_clone/features/domain/usecases/post/like_post_usecase.dart';
 import 'package:instagram_clone/features/domain/usecases/post/read_post_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/post/read_single_post_usecase.dart';
+import 'package:instagram_clone/features/presentation/cubit/comment/cubit/comment_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/post/cubit/post_cubit.dart';
+import 'package:instagram_clone/features/presentation/cubit/post/get_signle_post/cubit/get_single_post_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 
 import 'features/data/data_sources/remote_data_sources/remote_data_source.dart';
@@ -51,6 +59,8 @@ Future<void> init() async {
   );
 
   sl.registerFactory(() => GetSingleUserCubit(getSingleUserUseCase: sl.call()));
+  sl.registerFactory(
+      () => GetSinglePostCubit(readSinglePostUseCase: sl.call()));
   // Use Cases
   sl.registerLazySingleton(() => SignOutUseCase(repository: sl.call()));
 
@@ -80,6 +90,14 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeletePostUseCase(repository: sl.call()));
   sl.registerLazySingleton(() => ReadPostUseCase(repository: sl.call()));
   sl.registerLazySingleton(() => LikePostUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => ReadSinglePostUseCase(repository: sl.call()));
+
+  //comment
+  sl.registerLazySingleton(() => CreateCommentUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => UpdateCommentUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => DeleteCommentUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => ReadCommentUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => LikeCommentUseCase(repository: sl.call()));
 
   // Repository
 
@@ -101,6 +119,14 @@ Future<void> init() async {
       likePostUseCase: sl.call(),
       readPostUseCase: sl.call(),
       updatePostUseCase: sl.call()));
+
+  //Comment Cubit Injection
+  sl.registerLazySingleton<CommentCubit>(() => CommentCubit(
+      updateCommentUseCase: sl.call(),
+      deleteCommentUseCase: sl.call(),
+      likeCommentUseCase: sl.call(),
+      readCommentUseCase: sl.call(),
+      createCommentUseCase: sl.call()));
 
   // Externals
 

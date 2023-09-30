@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:instagram_clone/features/domain/entities/app_entity.dart';
 import 'package:instagram_clone/features/domain/entities/posts/post_entity.dart';
 import 'package:instagram_clone/features/domain/usecases/user/get_current_uid_usecase.dart';
 import 'package:instagram_clone/features/presentation/widgets/profile_widget.dart';
@@ -129,7 +130,10 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                   sizeHor(10),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, PageConst.commentPage);
+                      Navigator.pushNamed(context, PageConst.commentPage,
+                          arguments: AppEntity(
+                              uid: _currentUserUid,
+                              postId: widget.post.postId));
                     },
                     child: const Icon(
                       FeatherIcons.messageCircle,
@@ -171,9 +175,18 @@ class _PostCardWidgetState extends State<PostCardWidget> {
             ],
           ),
           sizeVer(10),
-          Text(
-            "View all ${widget.post.totalcomments} comments",
-            style: const TextStyle(color: darkGreyColor),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, PageConst.commentPage,
+                  arguments: AppEntity(
+                      postEntity: widget.post,
+                      uid: _currentUserUid,
+                      postId: widget.post.postId));
+            },
+            child: Text(
+              "View all ${widget.post.totalcomments} comments",
+              style: const TextStyle(color: darkGreyColor),
+            ),
           ),
           sizeVer(10),
           Text(
