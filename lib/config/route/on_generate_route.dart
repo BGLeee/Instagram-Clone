@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/features/domain/entities/app_entity.dart';
 import 'package:instagram_clone/features/domain/entities/comment/comment_entity.dart';
 import 'package:instagram_clone/features/domain/entities/posts/post_entity.dart';
+import 'package:instagram_clone/features/domain/entities/replay/replay_entity.dart';
 import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
 import 'package:instagram_clone/features/presentation/pages/Post/comment/edit_comment_page.dart';
+import 'package:instagram_clone/features/presentation/pages/Post/comment/widget/edit_replay_page.dart';
+import 'package:instagram_clone/features/presentation/pages/Post/comment/widget/edit_replay_widget.dart';
 import '../../const.dart';
 import '../../features/presentation/pages/Post/comment/comment_page.dart';
 import '../../features/presentation/pages/Post/update_post_page.dart';
@@ -48,6 +51,14 @@ class OnGenerateRoute {
         if (args is CommentEntity) {
           return routeBuilder(EditCommentPage(
             comment: args,
+          ));
+        } else {
+          return routeBuilder(const NoPageFound());
+        }
+      case PageConst.updateReplayPage:
+        if (args is ReplayEntity) {
+          return routeBuilder(EditReplayPage(
+            replay: args,
           ));
         } else {
           return routeBuilder(const NoPageFound());

@@ -5,15 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instagram_clone/features/domain/entities/app_entity.dart';
 import 'package:instagram_clone/features/domain/entities/comment/comment_entity.dart';
+import 'package:instagram_clone/features/domain/entities/replay/replay_entity.dart';
 import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
 import 'package:instagram_clone/features/presentation/cubit/comment/cubit/comment_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/post/get_signle_post/cubit/get_single_post_cubit.dart';
+import 'package:instagram_clone/features/presentation/cubit/replay/cubit/replay_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:instagram_clone/features/presentation/pages/Post/comment/widget/single_comment_widget.dart';
 import 'package:instagram_clone/features/presentation/widgets/profile_widget.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../../const.dart';
 import '../../../widgets/form_container_widget.dart';
+import 'package:instagram_clone/Injection_container.dart' as ic;
 
 class CommentMainWidget extends StatefulWidget {
   final AppEntity appEntity;
@@ -111,19 +114,23 @@ class _CommentPageState extends State<CommentMainWidget> {
                           itemCount: commentState.comment.length,
                           itemBuilder: (context, index) {
                             final singleComment = commentState.comment[index];
-                            return SingleCommentWidget(
-                              commentEntity: singleComment,
-                              onLongPressListener: () {
-                                _openBottomModalSheet(
-                                    context: context,
-                                    comment: commentState.comment[index]);
-                              },
-                              onLikePressListener: () {
-                                _likeComment(
-                                    comment: commentState.comment[index]);
-                              }
-                              // log("This is you liking the comment");
-                              ,
+                            return BlocProvider.value(
+                              value: ic.sl<ReplayCubit>(),
+                              child: SingleCommentWidget(
+                                currentUser: singleUser,
+                                commentEntity: singleComment,
+                                onLongPressListener: () {
+                                  _openBottomModalSheet(
+                                      context: context,
+                                      comment: commentState.comment[index]);
+                                },
+                                onLikePressListener: () {
+                                  _likeComment(
+                                      comment: commentState.comment[index]);
+                                }
+                                // log("This is you liking the comment");
+                                ,
+                              ),
                             );
                           },
                         )),

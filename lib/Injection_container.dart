@@ -12,9 +12,15 @@ import 'package:instagram_clone/features/domain/usecases/post/delete_post_usecas
 import 'package:instagram_clone/features/domain/usecases/post/like_post_usecase.dart';
 import 'package:instagram_clone/features/domain/usecases/post/read_post_usecase.dart';
 import 'package:instagram_clone/features/domain/usecases/post/read_single_post_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/replay/create_replay_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/replay/delete_replay_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/replay/like_post_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/replay/read_replay_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/replay/update_replay_usecase.dart';
 import 'package:instagram_clone/features/presentation/cubit/comment/cubit/comment_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/post/cubit/post_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/post/get_signle_post/cubit/get_single_post_cubit.dart';
+import 'package:instagram_clone/features/presentation/cubit/replay/cubit/replay_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 
 import 'features/data/data_sources/remote_data_sources/remote_data_source.dart';
@@ -61,6 +67,16 @@ Future<void> init() async {
   sl.registerFactory(() => GetSingleUserCubit(getSingleUserUseCase: sl.call()));
   sl.registerFactory(
       () => GetSinglePostCubit(readSinglePostUseCase: sl.call()));
+
+  // Replay Cubit Injection
+  sl.registerFactory(
+    () => ReplayCubit(
+        createReplayUseCase: sl.call(),
+        deleteReplayUseCase: sl.call(),
+        likeReplayUseCase: sl.call(),
+        readReplaysUseCase: sl.call(),
+        updateReplayUseCase: sl.call()),
+  );
   // Use Cases
   sl.registerLazySingleton(() => SignOutUseCase(repository: sl.call()));
 
@@ -98,6 +114,13 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeleteCommentUseCase(repository: sl.call()));
   sl.registerLazySingleton(() => ReadCommentUseCase(repository: sl.call()));
   sl.registerLazySingleton(() => LikeCommentUseCase(repository: sl.call()));
+
+  //replay
+  sl.registerLazySingleton(() => CreateReplayUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => UpdateReplayUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => DeleteReplayUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => ReadReplaysUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => LikeReplayUseCase(repository: sl.call()));
 
   // Repository
 

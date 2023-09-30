@@ -4,6 +4,7 @@ import 'package:instagram_clone/Injection_container.dart' as ic;
 import 'package:instagram_clone/features/domain/entities/app_entity.dart';
 import 'package:instagram_clone/features/presentation/cubit/comment/cubit/comment_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/post/get_signle_post/cubit/get_single_post_cubit.dart';
+import 'package:instagram_clone/features/presentation/cubit/replay/cubit/replay_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:instagram_clone/features/presentation/pages/Post/comment/comment_main_widget.dart';
 
@@ -23,6 +24,9 @@ class CommentPage extends StatelessWidget {
           ),
           BlocProvider.value(
             value: ic.sl<GetSinglePostCubit>(),
+          ),
+          BlocProvider.value(
+            value: ic.sl<ReplayCubit>(),
           ),
         ],
         child: CommentMainWidget(
