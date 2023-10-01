@@ -5,6 +5,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:instagram_clone/features/domain/entities/app_entity.dart';
 import 'package:instagram_clone/features/domain/entities/posts/post_entity.dart';
 import 'package:instagram_clone/features/domain/usecases/user/get_current_uid_usecase.dart';
+import 'package:instagram_clone/features/presentation/cubit/post/get_signle_post/cubit/get_single_post_cubit.dart';
 import 'package:instagram_clone/features/presentation/widgets/profile_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:instagram_clone/Injection_container.dart' as ic;
@@ -27,6 +28,9 @@ class _PostCardWidgetState extends State<PostCardWidget> {
   @override
   void initState() {
     super.initState();
+    // context
+    //     .read<GetSinglePostCubit>()
+    //     .getSinglePost(postId: widget.post.postId!);
     ic.sl<GetCurrentUidUseCase>().call().then((value) {
       setState(() {
         _currentUserUid = value;
@@ -44,23 +48,29 @@ class _PostCardWidgetState extends State<PostCardWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                      width: 30,
-                      height: 30,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(40),
-                        child:
-                            profileWidget(imageUrl: widget.post.userProfileUrl),
-                      )),
-                  sizeHor(10),
-                  Text(
-                    "${widget.post.username}",
-                    style: const TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.bold),
-                  )
-                ],
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, PageConst.singleUserProfilePage,
+                      arguments: widget.post.creatorUid);
+                },
+                child: Row(
+                  children: [
+                    Container(
+                        width: 30,
+                        height: 30,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: profileWidget(
+                              imageUrl: widget.post.userProfileUrl),
+                        )),
+                    sizeHor(10),
+                    Text(
+                      "${widget.post.username}",
+                      style: const TextStyle(
+                          color: primaryColor, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
               ),
               widget.post.creatorUid == _currentUserUid
                   ? InkWell(

@@ -7,6 +7,8 @@ import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
 import 'package:instagram_clone/features/presentation/pages/Post/comment/edit_comment_page.dart';
 import 'package:instagram_clone/features/presentation/pages/Post/comment/widget/edit_replay_page.dart';
 import 'package:instagram_clone/features/presentation/pages/Post/comment/widget/edit_replay_widget.dart';
+import 'package:instagram_clone/features/presentation/pages/Post/post_detail_page.dart';
+import 'package:instagram_clone/features/presentation/pages/Profile/single_user_profile.dart';
 import '../../const.dart';
 import '../../features/presentation/pages/Post/comment/comment_page.dart';
 import '../../features/presentation/pages/Post/update_post_page.dart';
@@ -43,6 +45,22 @@ class OnGenerateRoute {
         if (args is AppEntity) {
           return routeBuilder(CommentPage(
             appEntity: args,
+          ));
+        } else {
+          return routeBuilder(const NoPageFound());
+        }
+      case PageConst.postDetailPage:
+        if (args is String) {
+          return routeBuilder(PostDetailPage(
+            postId: args,
+          ));
+        } else {
+          return routeBuilder(const NoPageFound());
+        }
+      case PageConst.singleUserProfilePage:
+        if (args is String) {
+          return routeBuilder(SingleUserProfilePage(
+            otherUserId: args,
           ));
         } else {
           return routeBuilder(const NoPageFound());

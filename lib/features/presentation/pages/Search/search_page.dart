@@ -1,57 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/const.dart';
-import 'search_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_clone/Injection_container.dart' as ic;
+import 'package:instagram_clone/features/presentation/cubit/post/cubit/post_cubit.dart';
+import 'package:instagram_clone/features/presentation/pages/Search/widget/search_main_widget.dart';
 
-class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
-  @override
-  State<SearchPage> createState() => _SearchPageState();
-}
-
-class _SearchPageState extends State<SearchPage> {
-  final TextEditingController _searchController = TextEditingController();
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
+class SearchPage extends StatelessWidget {
+  const SearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: backGroundColor,
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SearchWidget(
-                  controller: _searchController,
-                ),
-                sizeVer(10),
-                GridView.builder(
-                    itemCount: 32,
-                    physics: const ScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 5,
-                            mainAxisSpacing: 5),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        width: 100,
-                        height: 100,
-                        color: secondaryColor,
-                      );
-                    })
-              ],
-            ),
-          ),
-        ),
-      ),
+    return BlocProvider.value(
+      value: ic.sl<PostCubit>(),
+      child: SearchMainWidget(),
     );
   }
 }
