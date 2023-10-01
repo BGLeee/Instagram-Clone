@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/const.dart';
 import 'package:instagram_clone/features/domain/entities/replay/replay_entity.dart';
 import 'package:instagram_clone/features/domain/usecases/user/get_current_uid_usecase.dart';
-import 'package:instagram_clone/features/presentation/widgets/form_container_widget.dart';
 import 'package:instagram_clone/features/presentation/widgets/profile_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:instagram_clone/Injection_container.dart' as ic;
@@ -38,13 +37,15 @@ class _SingleReplayWidgetState extends State<SingleReplayWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onLongPress: widget.onLongPress,
+      onLongPress: widget.replayEntity.creatorUid == _currentUserUid
+          ? widget.onLongPress
+          : () {},
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               width: 40,
               height: 40,
               child: ClipRRect(
@@ -73,12 +74,11 @@ class _SingleReplayWidgetState extends State<SingleReplayWidget> {
                         GestureDetector(
                           onTap: widget.onLikePressListener,
                           child: Icon(
-                            widget.replayEntity!.likes!
-                                    .contains(_currentUserUid)
+                            widget.replayEntity.likes!.contains(_currentUserUid)
                                 ? Icons.favorite
                                 : Icons.favorite_outline,
                             size: 20,
-                            color: widget.replayEntity!.likes!
+                            color: widget.replayEntity.likes!
                                     .contains(_currentUserUid)
                                 ? Colors.red
                                 : darkGreyColor,
@@ -96,7 +96,7 @@ class _SingleReplayWidgetState extends State<SingleReplayWidget> {
                       children: [
                         Text(
                           DateFormat("dd/MMM/yyy")
-                              .format(widget.replayEntity!.createAt!.toDate()),
+                              .format(widget.replayEntity.createAt!.toDate()),
                           style: const TextStyle(
                               color: darkGreyColor, fontSize: 12),
                         ),

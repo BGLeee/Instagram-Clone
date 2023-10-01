@@ -239,7 +239,18 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
     try {
       final postRef = await postCollection.doc(post.postId).get();
       if (!postRef.exists) {
-        postCollection.doc(post.postId).set(newPost);
+        postCollection.doc(post.postId).set(newPost).then((value) {
+          final userCollection = firebaseFirestore
+              .collection(FirebaseConst.users)
+              .doc(post.creatorUid);
+          userCollection.get().then((value) {
+            if (value.exists) {
+              final totalPosts = value.get('totalPosts');
+              userCollection.update({"totalPosts": totalPosts + 1});
+              return;
+            }
+          });
+        });
       } else {
         postCollection.doc(post.postId).update(newPost);
       }
@@ -252,7 +263,20 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
   Future<void> deletePost(PostEntity post) async {
     final postCollection = firebaseFirestore.collection(FirebaseConst.posts);
     try {
-      await postCollection.doc(post.postId).delete();
+      postCollection.doc(post.postId).delete().then((value) {
+        final userCollection = firebaseFirestore
+            .collection(FirebaseConst.users)
+            .doc(post.creatorUid);
+        userCollection.get().then((value) {
+          if (value.exists) {
+            final totalPosts = value.get('totalPosts');
+            userCollection.update({"totalPosts": totalPosts - 1});
+            return;
+          } else {
+            log("value doesn't not exist man");
+          }
+        });
+      });
     } catch (e) {
       toast("some shit happened when deleting new post");
     }

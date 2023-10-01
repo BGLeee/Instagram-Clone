@@ -201,21 +201,25 @@ class _CommentPageState extends State<CommentMainWidget> {
 
   _createComment(UserEntity currentUser) {
     // log("this is your value ${_descriptionController.text}");
-    BlocProvider.of<CommentCubit>(context)
-        .createComment(
-            comment: CommentEntity(
-                commentId: const Uuid().v1(),
-                createAt: Timestamp.now(),
-                likes: [],
-                username: currentUser.username,
-                userProfileUrl: currentUser.profileUrl,
-                description: _descriptionController.text,
-                creatorUid: currentUser.uid,
-                postId: widget.appEntity.postId,
-                totalReplays: 0))
-        .then((value) {
-      _clear();
-    });
+    if (_descriptionController.text.isNotEmpty) {
+      BlocProvider.of<CommentCubit>(context)
+          .createComment(
+              comment: CommentEntity(
+                  commentId: const Uuid().v1(),
+                  createAt: Timestamp.now(),
+                  likes: [],
+                  username: currentUser.username,
+                  userProfileUrl: currentUser.profileUrl,
+                  description: _descriptionController.text,
+                  creatorUid: currentUser.uid,
+                  postId: widget.appEntity.postId,
+                  totalReplays: 0))
+          .then((value) {
+        _clear();
+      });
+    } else {
+      toast("Enter a comment");
+    }
   }
 
   _clear() {

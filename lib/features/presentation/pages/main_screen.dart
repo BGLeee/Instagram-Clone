@@ -79,15 +79,6 @@ class _MainScreenState extends State<MainScreen> {
               onPageChanged: onPageChanged,
               children: [
                 HomePage(),
-                // BlocProvider.value(
-                //   value: ic.sl<PostCubit>()..getPosts(post: PostEntity()),
-                //   child: HomePage(),
-                // ),
-                // MultiBlocProvider(providers: [
-                //   BlocProvider<PostCubit>(
-                //       create: (context) =>
-                //           ic.sl<PostCubit>()..getPosts(post: PostEntity()))
-                // ], child: const HomePage()),
                 const SearchPage(),
                 UploadPostPage(
                   currentUser: currentUser,

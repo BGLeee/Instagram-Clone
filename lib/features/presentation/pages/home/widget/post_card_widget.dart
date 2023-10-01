@@ -62,15 +62,17 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                   )
                 ],
               ),
-              InkWell(
-                onTap: () {
-                  _openBottomModalSheet(context);
-                },
-                child: const Icon(
-                  Icons.more_vert,
-                  color: primaryColor,
-                ),
-              )
+              widget.post.creatorUid == _currentUserUid
+                  ? InkWell(
+                      onTap: () {
+                        _openBottomModalSheet(context);
+                      },
+                      child: const Icon(
+                        Icons.more_vert,
+                        color: primaryColor,
+                      ),
+                    )
+                  : SizedBox()
             ],
           ),
           sizeVer(10),
@@ -276,8 +278,9 @@ class _PostCardWidgetState extends State<PostCardWidget> {
   }
 
   _deletePost() {
-    BlocProvider.of<PostCubit>(context)
-        .deletePost(post: PostEntity(postId: widget.post.postId));
+    BlocProvider.of<PostCubit>(context).deletePost(
+        post: PostEntity(
+            postId: widget.post.postId, creatorUid: widget.post.creatorUid));
     Navigator.pop(context);
   }
 

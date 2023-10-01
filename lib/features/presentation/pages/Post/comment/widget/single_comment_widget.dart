@@ -60,7 +60,9 @@ class _SingleCommentWidgetState extends State<SingleCommentWidget> {
             postId: widget.commentEntity!.postId,
             commentId: widget.commentEntity!.commentId));
     return InkWell(
-      onLongPress: widget.onLongPressListener,
+      onLongPress: widget.commentEntity!.creatorUid == _currentUserUid
+          ? widget.onLongPressListener
+          : () {},
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(
@@ -113,7 +115,7 @@ class _SingleCommentWidgetState extends State<SingleCommentWidget> {
                       "${widget.commentEntity!.description}",
                       style: const TextStyle(color: primaryColor),
                     ),
-                    sizeVer(4),
+                    sizeVer(8),
                     Row(
                       children: [
                         Text(
@@ -138,7 +140,7 @@ class _SingleCommentWidgetState extends State<SingleCommentWidget> {
                         GestureDetector(
                           onTap: () {
                             widget.commentEntity!.totalReplays == 0
-                                ? toast("No Replays herer")
+                                ? toast("No Replays here")
                                 : BlocProvider.of<ReplayCubit>(context)
                                     .getReplays(
                                         replay: ReplayEntity(
@@ -217,24 +219,28 @@ class _SingleCommentWidgetState extends State<SingleCommentWidget> {
   }
 
   _createReplay() async {
-    await BlocProvider.of<ReplayCubit>(context)
-        .createReplay(
-            replay: ReplayEntity(
-                replayId: const Uuid().v1(),
-                createAt: Timestamp.now(),
-                likes: [],
-                username: widget.currentUser!.username,
-                userProfileUrl: widget.currentUser!.profileUrl,
-                creatorUid: widget.currentUser!.uid,
-                postId: widget.commentEntity!.postId,
-                description: _replayDescriptionController.text,
-                commentId: widget.commentEntity!.commentId))
-        .then((value) {
-      setState(() {
-        _replayDescriptionController.clear();
-        _isUserReplaying = false;
+    if (_replayDescriptionController.text.isNotEmpty) {
+      await BlocProvider.of<ReplayCubit>(context)
+          .createReplay(
+              replay: ReplayEntity(
+                  replayId: const Uuid().v1(),
+                  createAt: Timestamp.now(),
+                  likes: [],
+                  username: widget.currentUser!.username,
+                  userProfileUrl: widget.currentUser!.profileUrl,
+                  creatorUid: widget.currentUser!.uid,
+                  postId: widget.commentEntity!.postId,
+                  description: _replayDescriptionController.text,
+                  commentId: widget.commentEntity!.commentId))
+          .then((value) {
+        setState(() {
+          _replayDescriptionController.clear();
+          _isUserReplaying = false;
+        });
       });
-    });
+    } else {
+      toast("Enter a replay");
+    }
   }
 
   _openBottomModalSheet(

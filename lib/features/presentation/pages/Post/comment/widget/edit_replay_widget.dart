@@ -1,16 +1,10 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instagram_clone/const.dart';
-import 'package:instagram_clone/features/domain/entities/comment/comment_entity.dart';
 import 'package:instagram_clone/features/domain/entities/replay/replay_entity.dart';
-import 'package:instagram_clone/features/presentation/cubit/comment/cubit/comment_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/replay/cubit/replay_cubit.dart';
 import 'package:instagram_clone/features/presentation/pages/Profile/profile_form_widget.dart';
 import 'package:instagram_clone/features/presentation/widgets/button_container_widget.dart';
-import 'package:instagram_clone/features/presentation/widgets/profile_widget.dart';
 
 class EditReplayWidget extends StatefulWidget {
   final ReplayEntity? replay;
@@ -48,7 +42,7 @@ class _EditCommentPageState extends State<EditReplayWidget> {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(children: [
           ProfileFormWidget(
-            title: "replay",
+            title: "Replay",
             controller: _descriptionController,
           ),
           sizeVer(10),

@@ -56,9 +56,9 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          const Text(
-                            "0",
-                            style: TextStyle(
+                          Text(
+                            "${currentUser.totalPosts}",
+                            style: const TextStyle(
                                 color: primaryColor,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -72,9 +72,9 @@ class ProfilePage extends StatelessWidget {
                       sizeHor(25),
                       Column(
                         children: [
-                          const Text(
-                            "54",
-                            style: TextStyle(
+                          Text(
+                            "${currentUser.totalFollowers}",
+                            style: const TextStyle(
                                 color: primaryColor,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -88,9 +88,9 @@ class ProfilePage extends StatelessWidget {
                       sizeHor(25),
                       Column(
                         children: [
-                          const Text(
-                            "123",
-                            style: TextStyle(
+                          Text(
+                            "${currentUser.totalFollowing}",
+                            style: const TextStyle(
                                 color: primaryColor,
                                 fontWeight: FontWeight.bold),
                           ),
