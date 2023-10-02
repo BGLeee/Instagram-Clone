@@ -17,10 +17,13 @@ import 'package:instagram_clone/features/domain/usecases/replay/delete_replay_us
 import 'package:instagram_clone/features/domain/usecases/replay/like_post_usecase.dart';
 import 'package:instagram_clone/features/domain/usecases/replay/read_replay_usecase.dart';
 import 'package:instagram_clone/features/domain/usecases/replay/update_replay_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/user/follow_UnFollow_user_usecase.dart';
+import 'package:instagram_clone/features/domain/usecases/user/get_single_other_user_usecase.dart';
 import 'package:instagram_clone/features/presentation/cubit/comment/cubit/comment_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/post/cubit/post_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/post/get_signle_post/cubit/get_single_post_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/replay/cubit/replay_cubit.dart';
+import 'package:instagram_clone/features/presentation/cubit/user/get_single_other_user/cubit/get_single_other_user_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 
 import 'features/data/data_sources/remote_data_sources/remote_data_source.dart';
@@ -61,10 +64,14 @@ Future<void> init() async {
   );
 
   sl.registerFactory(
-    () => UserCubit(updateUserUseCase: sl.call(), getUsersUseCase: sl.call()),
+    () => UserCubit(
+        followUnFollowUserUseCase: sl.call(),
+        updateUserUseCase: sl.call(),
+        getUsersUseCase: sl.call()),
   );
 
   sl.registerFactory(() => GetSingleUserCubit(getSingleUserUseCase: sl.call()));
+
   sl.registerFactory(
       () => GetSinglePostCubit(readSinglePostUseCase: sl.call()));
 
@@ -95,6 +102,12 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CreateUserUseCase(repository: sl.call()));
 
   sl.registerLazySingleton(() => GetUserUseCase(repository: sl.call()));
+
+  sl.registerLazySingleton(
+      () => GetSingleOtherUserUseCase(repository: sl.call()));
+
+  sl.registerLazySingleton(
+      () => FollowUnFollowUserUseCase(repository: sl.call()));
 
   //Storage
   sl.registerLazySingleton(
@@ -134,7 +147,8 @@ Future<void> init() async {
           firebaseFirestore: sl.call(),
           firebaseAuth: sl.call(),
           firebaseStorage: sl.call()));
-
+  sl.registerLazySingleton<GetSingleOtherUserCubit>(
+      () => GetSingleOtherUserCubit(getSingleOtherUserUseCase: sl.call()));
   // Post Cubit Injection
   sl.registerLazySingleton<PostCubit>(() => PostCubit(
       createPostUseCase: sl.call(),

@@ -8,6 +8,8 @@ import 'package:instagram_clone/features/presentation/pages/Post/comment/edit_co
 import 'package:instagram_clone/features/presentation/pages/Post/comment/widget/edit_replay_page.dart';
 import 'package:instagram_clone/features/presentation/pages/Post/comment/widget/edit_replay_widget.dart';
 import 'package:instagram_clone/features/presentation/pages/Post/post_detail_page.dart';
+import 'package:instagram_clone/features/presentation/pages/Profile/followers_page.dart';
+import 'package:instagram_clone/features/presentation/pages/Profile/following_page.dart';
 import 'package:instagram_clone/features/presentation/pages/Profile/single_user_profile.dart';
 import '../../const.dart';
 import '../../features/presentation/pages/Post/comment/comment_page.dart';
@@ -26,6 +28,26 @@ class OnGenerateRoute {
         {
           if (args is UserEntity) {
             return routeBuilder(EditProfilePage(
+              currentUser: args,
+            ));
+          } else {
+            return routeBuilder(const NoPageFound());
+          }
+        }
+      case PageConst.followingPage:
+        {
+          if (args is UserEntity) {
+            return routeBuilder(FollowingPage(
+              currentUser: args,
+            ));
+          } else {
+            return routeBuilder(const NoPageFound());
+          }
+        }
+      case PageConst.followersPage:
+        {
+          if (args is UserEntity) {
+            return routeBuilder(FollowersPage(
               currentUser: args,
             ));
           } else {

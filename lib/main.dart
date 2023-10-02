@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/config/route/on_generate_route.dart';
 import 'package:instagram_clone/features/presentation/cubit/auth/cubit/auth_cubit.dart';
+import 'package:instagram_clone/features/presentation/cubit/user/get_single_other_user/cubit/get_single_other_user_cubit.dart';
 import 'package:instagram_clone/features/presentation/pages/credentials/sign_in_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:instagram_clone/Injection_container.dart' as ic;
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ic.sl<CredentialCubit>()),
         BlocProvider(create: (_) => ic.sl<UserCubit>()),
         BlocProvider(create: (_) => ic.sl<GetSingleUserCubit>()),
+        BlocProvider(create: (_) => ic.sl<GetSingleOtherUserCubit>()),
       ],
       child: MaterialApp(
         title: 'Instagram Clone',

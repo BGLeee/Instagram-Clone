@@ -595,11 +595,13 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
     final otherUserDocRef = await userCollection.doc(user.otherUid).get();
 
     if (myDocRef.exists && otherUserDocRef.exists) {
+      print("it exist eko");
       List myFollowingList = myDocRef.get("following");
       List otherUserFollowersList = otherUserDocRef.get("followers");
 
       // My Following List
       if (myFollowingList.contains(user.otherUid)) {
+        print("it containes his id and it is ${user.uid}");
         userCollection.doc(user.uid).update({
           "following": FieldValue.arrayRemove([user.otherUid])
         }).then((value) {

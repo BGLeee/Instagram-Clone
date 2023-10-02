@@ -21,7 +21,7 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<PostCubit>(context).getPosts(post: PostEntity());
+    BlocProvider.of<PostCubit>(context).getPosts(post: const PostEntity());
   }
 
   @override
@@ -85,36 +85,48 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> {
                         ],
                       ),
                       sizeHor(25),
-                      Column(
-                        children: [
-                          Text(
-                            "${widget.currentUser.totalFollowers}",
-                            style: const TextStyle(
-                                color: primaryColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          sizeVer(8),
-                          const Text(
-                            "Followers",
-                            style: TextStyle(color: primaryColor),
-                          )
-                        ],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, PageConst.followersPage,
+                              arguments: widget.currentUser);
+                        },
+                        child: Column(
+                          children: [
+                            Text(
+                              "${widget.currentUser.totalFollowers}",
+                              style: const TextStyle(
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            sizeVer(8),
+                            const Text(
+                              "Followers",
+                              style: TextStyle(color: primaryColor),
+                            )
+                          ],
+                        ),
                       ),
                       sizeHor(25),
-                      Column(
-                        children: [
-                          Text(
-                            "${widget.currentUser.totalFollowing}",
-                            style: const TextStyle(
-                                color: primaryColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          sizeVer(8),
-                          const Text(
-                            "Following",
-                            style: TextStyle(color: primaryColor),
-                          )
-                        ],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, PageConst.followingPage,
+                              arguments: widget.currentUser);
+                        },
+                        child: Column(
+                          children: [
+                            Text(
+                              "${widget.currentUser.totalFollowing}",
+                              style: const TextStyle(
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            sizeVer(8),
+                            const Text(
+                              "Following",
+                              style: TextStyle(color: primaryColor),
+                            )
+                          ],
+                        ),
                       )
                     ],
                   )
@@ -131,7 +143,9 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> {
                 "${widget.currentUser.bio}",
                 style: const TextStyle(color: primaryColor),
               ),
-              sizeVer(10),
+              const SizedBox(
+                child: Divider(color: Colors.white),
+              ),
               BlocBuilder<PostCubit, PostState>(
                 builder: (context, postState) {
                   if (postState is PostLoaded) {
@@ -164,7 +178,7 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> {
                           );
                         });
                   }
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 },
