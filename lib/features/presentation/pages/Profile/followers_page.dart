@@ -3,7 +3,6 @@ import 'package:instagram_clone/const.dart';
 import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
 import 'package:instagram_clone/Injection_container.dart' as ic;
 import 'package:instagram_clone/features/domain/usecases/user/get_user_usercases.dart';
-import 'package:instagram_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:instagram_clone/features/presentation/widgets/profile_widget.dart';
 
 class FollowersPage extends StatelessWidget {

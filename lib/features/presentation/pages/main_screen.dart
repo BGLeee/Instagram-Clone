@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:instagram_clone/features/domain/entities/posts/post_entity.dart';
-import 'package:instagram_clone/features/presentation/cubit/post/cubit/post_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:instagram_clone/features/presentation/pages/Post/upload_post.dart';
 import 'package:instagram_clone/features/presentation/pages/Profile/profile_page.dart';
@@ -10,8 +8,6 @@ import 'package:instagram_clone/features/presentation/pages/Search/search_page.d
 import 'package:instagram_clone/features/presentation/pages/activity/activity_page.dart';
 import 'package:instagram_clone/features/presentation/pages/home/home_page.dart';
 import '../../../const.dart';
-import '../cubit/user/cubit/user_cubit.dart';
-import 'package:instagram_clone/Injection_container.dart' as ic;
 
 class MainScreen extends StatefulWidget {
   final String? uid;
@@ -78,7 +74,7 @@ class _MainScreenState extends State<MainScreen> {
               controller: pageController,
               onPageChanged: onPageChanged,
               children: [
-                HomePage(),
+                const HomePage(),
                 const SearchPage(),
                 UploadPostPage(
                   currentUser: currentUser,

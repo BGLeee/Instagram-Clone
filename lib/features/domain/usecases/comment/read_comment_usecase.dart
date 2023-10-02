@@ -1,5 +1,5 @@
-import '../../entities/posts/post_entity.dart';
-import '../../repository/firebase_repository.dart';
+import 'package:instagram_clone/features/domain/repository/firebase_repository.dart';
+
 import '../../entities/comment/comment_entity.dart';
 
 class ReadCommentUseCase {

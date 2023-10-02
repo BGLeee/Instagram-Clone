@@ -8,7 +8,6 @@ import 'package:instagram_clone/features/domain/entities/posts/post_entity.dart'
 import 'package:instagram_clone/features/presentation/cubit/post/cubit/post_cubit.dart';
 import 'package:instagram_clone/features/presentation/pages/home/widget/post_card_widget.dart';
 import '../../../../const.dart';
-import "package:flutter_feather_icons/flutter_feather_icons.dart";
 import 'package:instagram_clone/Injection_container.dart' as ic;
 
 class HomePage extends StatefulWidget {

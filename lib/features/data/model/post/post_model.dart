@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
 import 'package:instagram_clone/features/domain/entities/posts/post_entity.dart';
 
 class PostModel extends PostEntity {

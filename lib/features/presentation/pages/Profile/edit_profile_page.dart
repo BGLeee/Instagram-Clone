@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
 import 'package:instagram_clone/features/domain/usecases/storage/upload_profile_image_toStograge_usecase.dart';
-import 'package:instagram_clone/features/presentation/cubit/auth/cubit/auth_cubit.dart';
 import '../../../../const.dart';
 import '../../cubit/user/cubit/user_cubit.dart';
 import '../../widgets/profile_widget.dart';

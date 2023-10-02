@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
-
 import '../../repository/firebase_repository.dart';
 
 class UploadImageToStorageUseCase {

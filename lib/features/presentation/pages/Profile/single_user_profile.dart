@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instagram_clone/features/presentation/cubit/post/cubit/post_cubit.dart';
-import 'package:instagram_clone/features/presentation/cubit/user/get_single_other_user/cubit/get_single_other_user_cubit.dart';
-import 'package:instagram_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:instagram_clone/features/presentation/pages/Profile/single_user_profile_widget.dart';
 import 'package:instagram_clone/Injection_container.dart' as ic;
 

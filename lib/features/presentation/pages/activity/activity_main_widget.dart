@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:instagram_clone/const.dart';
 import 'package:instagram_clone/features/domain/entities/app_entity.dart';
 import 'package:instagram_clone/features/domain/entities/posts/post_entity.dart';
+import 'package:instagram_clone/Injection_container.dart' as ic;
 import 'package:instagram_clone/features/domain/usecases/user/get_current_uid_usecase.dart';
+import 'package:instagram_clone/features/presentation/cubit/post/cubit/post_cubit.dart';
+import 'package:instagram_clone/features/presentation/pages/Post/widget/like_animation_widget.dart';
 import 'package:instagram_clone/features/presentation/widgets/profile_widget.dart';
 import 'package:intl/intl.dart';
-import 'package:instagram_clone/Injection_container.dart' as ic;
-import '../../../../../const.dart';
-import '../../../cubit/post/cubit/post_cubit.dart';
-import '../../Post/widget/like_animation_widget.dart';
 
-class PostCardWidget extends StatefulWidget {
+class ActivityMainWidget extends StatefulWidget {
   final PostEntity post;
-  const PostCardWidget({super.key, required this.post});
+  const ActivityMainWidget({super.key, required this.post});
 
   @override
-  State<PostCardWidget> createState() => _PostCardWidgetState();
+  State<ActivityMainWidget> createState() => _ActivityMainWidgetState();
 }
 
-class _PostCardWidgetState extends State<PostCardWidget> {
+class _ActivityMainWidgetState extends State<ActivityMainWidget> {
   bool _isLikeAnimating = false;
   String? _currentUserUid;
 
@@ -293,6 +293,13 @@ class _PostCardWidgetState extends State<PostCardWidget> {
   }
 
   _likePost() {
+    // final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    // final postCollection = firebaseFirestore.collection(FirebaseConst.posts);
+    // postCollection.doc(widget.post.postId).update({
+    //   "likes": FieldValue.arrayRemove(["slfjsljfls"]),
+    //   "totalLikes": 1,
+    // });
+
     BlocProvider.of<PostCubit>(context)
         .likePost(post: PostEntity(postId: widget.post.postId));
   }

@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instagram_clone/features/domain/entities/app_entity.dart';
 import 'package:instagram_clone/features/domain/entities/comment/comment_entity.dart';
-import 'package:instagram_clone/features/domain/entities/replay/replay_entity.dart';
 import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
 import 'package:instagram_clone/features/presentation/cubit/comment/cubit/comment_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/post/get_signle_post/cubit/get_single_post_cubit.dart';
@@ -15,7 +12,6 @@ import 'package:instagram_clone/features/presentation/pages/Post/comment/widget/
 import 'package:instagram_clone/features/presentation/widgets/profile_widget.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../../const.dart';
-import '../../../widgets/form_container_widget.dart';
 import 'package:instagram_clone/Injection_container.dart' as ic;
 
 class CommentMainWidget extends StatefulWidget {
@@ -27,7 +23,6 @@ class CommentMainWidget extends StatefulWidget {
 }
 
 class _CommentPageState extends State<CommentMainWidget> {
-  bool _isUserReplaying = false;
   TextEditingController _descriptionController = TextEditingController();
 
   @override

@@ -6,7 +6,6 @@ import 'package:instagram_clone/features/domain/entities/replay/replay_entity.da
 import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
 import 'package:instagram_clone/features/presentation/pages/Post/comment/edit_comment_page.dart';
 import 'package:instagram_clone/features/presentation/pages/Post/comment/widget/edit_replay_page.dart';
-import 'package:instagram_clone/features/presentation/pages/Post/comment/widget/edit_replay_widget.dart';
 import 'package:instagram_clone/features/presentation/pages/Post/post_detail_page.dart';
 import 'package:instagram_clone/features/presentation/pages/Profile/followers_page.dart';
 import 'package:instagram_clone/features/presentation/pages/Profile/following_page.dart';

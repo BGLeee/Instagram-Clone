@@ -6,7 +6,6 @@ import 'package:instagram_clone/features/domain/usecases/user/get_current_uid_us
 import 'package:instagram_clone/features/presentation/cubit/post/cubit/post_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/user/cubit/user_cubit.dart';
 import 'package:instagram_clone/features/presentation/cubit/user/get_single_other_user/cubit/get_single_other_user_cubit.dart';
-import 'package:instagram_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:instagram_clone/features/presentation/widgets/button_container_widget.dart';
 import 'package:instagram_clone/features/presentation/widgets/profile_widget.dart';
 import 'package:instagram_clone/Injection_container.dart' as ic;
