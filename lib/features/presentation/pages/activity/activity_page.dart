@@ -20,6 +20,7 @@ class _ActivityPageState extends State<ActivityPage> {
   @override
   void initState() {
     super.initState();
+
     ic.sl<GetCurrentUidUseCase>().call().then((value) {
       setState(() {
         _currentUserUid = value;
