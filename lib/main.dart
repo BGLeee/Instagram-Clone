@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/config/route/on_generate_route.dart';
-import 'package:instagram_clone/features/presentation/cubit/auth/cubit/auth_cubit.dart';
-import 'package:instagram_clone/features/presentation/cubit/user/get_single_other_user/cubit/get_single_other_user_cubit.dart';
-import 'package:instagram_clone/features/presentation/pages/credentials/sign_in_page.dart';
+import 'package:instagram_clone/features/auth/presentation/cubit/auth/cubit/auth_cubit.dart';
+import 'package:instagram_clone/features/credentials/presentation/cubit/credential/cubit/credential_cubit.dart';
+import 'package:instagram_clone/features/credentials/presentation/pages/credentials/sign_in_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:instagram_clone/Injection_container.dart' as ic;
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'features/presentation/cubit/credential/cubit/credential_cubit.dart';
-import 'features/presentation/cubit/user/cubit/user_cubit.dart';
-import 'features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
-import 'features/presentation/pages/main_screen.dart';
+import 'package:instagram_clone/features/home/presentation/pages/home/main_screen.dart';
+import 'package:instagram_clone/features/user/presentation/cubit/user/cubit/user_cubit.dart';
+import 'package:instagram_clone/features/user/presentation/cubit/user/get_single_other_user/cubit/get_single_other_user_cubit.dart';
+import 'package:instagram_clone/features/user/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

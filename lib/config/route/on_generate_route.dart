@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/features/domain/entities/app_entity.dart';
-import 'package:instagram_clone/features/domain/entities/comment/comment_entity.dart';
-import 'package:instagram_clone/features/domain/entities/posts/post_entity.dart';
-import 'package:instagram_clone/features/domain/entities/replay/replay_entity.dart';
-import 'package:instagram_clone/features/domain/entities/user/user_entity.dart';
-import 'package:instagram_clone/features/presentation/pages/Post/comment/edit_comment_page.dart';
-import 'package:instagram_clone/features/presentation/pages/Post/comment/widget/edit_replay_page.dart';
-import 'package:instagram_clone/features/presentation/pages/Post/post_detail_page.dart';
-import 'package:instagram_clone/features/presentation/pages/Profile/followers_page.dart';
-import 'package:instagram_clone/features/presentation/pages/Profile/following_page.dart';
-import 'package:instagram_clone/features/presentation/pages/Profile/single_user_profile.dart';
+import 'package:instagram_clone/features/comment/presentation/pages/comment/comment_page.dart';
+import 'package:instagram_clone/features/comment/presentation/pages/comment/edit_comment_page.dart';
+import 'package:instagram_clone/features/credentials/presentation/pages/credentials/sign_in_page.dart';
+import 'package:instagram_clone/features/credentials/presentation/pages/credentials/sign_up_page.dart';
+import 'package:instagram_clone/features/home/domain/entities/app_entity.dart';
+import 'package:instagram_clone/features/comment/domain/entities/comment/comment_entity.dart';
+import 'package:instagram_clone/features/post/domain/entities/posts/post_entity.dart';
+import 'package:instagram_clone/features/replay/domain/entities/replay/replay_entity.dart';
+import 'package:instagram_clone/features/user/domain/entities/user/user_entity.dart';
+import 'package:instagram_clone/features/post/presentation/pages/Post/post_detail_page.dart';
+import 'package:instagram_clone/features/post/presentation/pages/Post/update_post_page.dart';
+import 'package:instagram_clone/features/profile/presentation/pages/edit_profile_page.dart';
+import 'package:instagram_clone/features/profile/presentation/pages/followers_page.dart';
+import 'package:instagram_clone/features/profile/presentation/pages/following_page.dart';
+import 'package:instagram_clone/features/profile/presentation/pages/single_user_profile.dart';
+import 'package:instagram_clone/features/replay/presentation/pages/edit_replay_page.dart';
 import '../../const.dart';
-import '../../features/presentation/pages/Post/comment/comment_page.dart';
-import '../../features/presentation/pages/Post/update_post_page.dart';
-import '../../features/presentation/pages/Profile/edit_profile_page.dart';
-import '../../features/presentation/pages/credentials/sign_in_page.dart';
-import '../../features/presentation/pages/credentials/sign_up_page.dart';
 
 class OnGenerateRoute {
   static Route<dynamic>? route(RouteSettings settings) {
