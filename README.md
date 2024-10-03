@@ -29,6 +29,7 @@ flutter run
 - Flutter & Dart
 - Firebase Authentication & Firestore
 - Flutterbloc for State Management
+  
 Feel free to explore, contribute, or reach out if you have any questions!
 
    
